@@ -10,7 +10,7 @@ class UserController
 
     public function UserRegistration(Request $request): \Illuminate\Http\JsonResponse
     {
-        User::created([
+        User::create([
             'email' => $request->input("email"),
             'password' => $request->input("password")
         ]);
