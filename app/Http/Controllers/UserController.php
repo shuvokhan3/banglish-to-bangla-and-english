@@ -8,15 +8,16 @@ use Illuminate\Http\Request;
 class UserController
 {
 
-    public function UserRegistration(Request $request){
-        User::create([
-            'email'=>$request->input('email'),
-            'password'=>$request->input('password')
+    public function UserRegistration(Request $request): \Illuminate\Http\JsonResponse
+    {
+        User::created([
+            'email' => $request->input("email"),
+            'password' => $request->input("password")
         ]);
 
-        return $request->json([
-            'status'=>'Success',
-            'message' => 'User created successfully',
-        ],201 );
+        return response()->json([
+            'status' => "Success",
+            'message' => 'Registration Successful'
+        ],201);
     }
 }
