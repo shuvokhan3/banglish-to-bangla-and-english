@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\JWTToken;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController
 {
+
+    //User registration
     public function UserRegistration(Request $request): \Illuminate\Http\JsonResponse
     {
         try {
@@ -50,4 +54,37 @@ class UserController
             ], 500);
         }
     }
+
+
+    //User Login
+    public function UserLogin(Request $request): \Illuminate\Http\JsonResponse{
+        // validate input first
+        $request->validate([
+            'email'    => 'required|email',
+            'password' => 'required|string',
+        ]);
+
+        //Get user by email
+        $user = User::where('email',$request->input('email'))->first();
+
+
+        if (!$user || !Hash::check($request->input('password'), $user->password)) {
+            // Email not found OR password wrong
+            return response()->json([
+                 'status'  => 'failed',
+                 'message' => 'Invalid email or password.',
+           ], 401);
+        }
+
+        $token = JWTToken::CreateToken($user->email, $user->id);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Login successful',
+            'token' => $token,
+        ],200)->cookie('token', $token, 60);
+
+
+    }
+
+
 }
