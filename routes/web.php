@@ -8,8 +8,8 @@ Route::get('/', function () {
 });
 
 
-Route::post('/signup', [UserController::class,'UserRegistration']);
-Route::get('/signin', [UserController::class,'UserLogin']);
+Route::post('/registration', [UserController::class,'UserRegistration']);
+Route::get('/login', [UserController::class,'UserLogin']);
 
 
 
