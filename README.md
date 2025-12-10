@@ -12,3 +12,9 @@ Workflow for Development this system :
 5 : Make model
 
 6 : First work with signup system 
+
+7 : User registration controller
+
+8 : User Login controller 
+
+
